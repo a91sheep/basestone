@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: springcloud-api
+kylin:
+  cloud:
+    app:
+      version: 1.0
+      description: api测试demo
+    contextPath: /springcloudapi

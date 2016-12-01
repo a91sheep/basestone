@@ -1,0 +1,64 @@
+spring:
+  profiles:
+    active: dev
+  application:
+    name: DiscoveryServer
+  cloud:
+    config:
+      discovery:
+        enabled: true
+#      uri: http://ConfigServer:8888/configserver    #add today
+#      name: ${kylin.cloud.config.names:${kylin.cloud.config.name:${spring.application.name}}}  #add today
+server:
+  port: 8761
+  context-path: /discoveryserver
+management:
+  context-path: /manage
+eureka:
+  datacenter: 59store
+  environment: ${spring.profiles.active}
+  instance:
+    preferIpAddress: true
+    statusPageUrlPath: ${server.context-path}${management.context-path}/info
+    healthCheckUrlPath: ${server.context-path}${management.context-path}/health
+    homePageUrlPath: ${server.context-path}
+    leaseRenewalIntervalInSeconds: 10
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://DiscoveryServer:${server.port:8761}${server.context-path}/eureka/
+#      defaultZone: http://${discovery.server.username:user}:${discovery.server.password:1460583e6b}@${discovery.server.host:DiscoveryServer}:${server.port:18761}${server.context-path}/eureka/
+info:
+  app:
+    name: ${spring.application.name}
+    version: 0.1.0
+    description: 服务注册中心
+#logging:
+#  level:
+#    org:
+#      springframework:
+#        security: INFO
+#        boot:
+#          actuate:
+#            audit:
+#              listener:
+#                AuditListener: DEBUG
+---
+spring:
+  profiles: dev
+#security:
+#  user:
+#    password: 1460583e6b
+---
+spring:
+  profiles: qa
+---
+spring:
+  profiles: stage
+---
+spring:
+  profiles: prod
+#security:
+#  user:
+#    password: 09d5d1ddaf

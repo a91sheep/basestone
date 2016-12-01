@@ -1,0 +1,96 @@
+spring:
+  application:
+    name: configserver
+  profiles:
+      active: dev
+  cloud:
+    config:
+      name: global,kylin,${spring.application.name}
+      server:
+        bootstrap: true
+        git:
+          basedir: /opt/data/configserver
+encrypt:
+  failOnError: false
+  keyStore:
+    alias: 59store
+    secret: 59store
+---
+spring:
+  profiles: dev
+  cloud:
+    config:
+      server:
+#        native:
+#          searchLocations: file:/data/config-repo
+        git:
+          uri: http://code.59store.com/linxh/cfg-dev.git
+          username: linxh@59store.com
+          password: a7758521
+#          repos:
+#            example:
+#              pattern: example, *example*
+#              uri: http://git.59store.com/example/config-repo.git
+#              username: chenyb@59store.com
+#              password: '{cipher}AQBhY2z8mTYdy8UCQliYc39mI76q/aJ0dwDcBUzGE3EtjTW8InPq50yHE0BKoVC9NzbEssAxl+joMxCKZcjPizKwtz3f+kYQZuRSpyiPsAp7SSCtTBHlkK5oNjIBGQ6hAhaf6jAhpeQEk3Zz9YhMyxkhYF+ES2FRkYI+pQm/JH+P4XvO2FMFk1gz5CxrH+xRali7VHRxp8mG15T6Y+hAuekmjGEPXV+GJenfWdzBkJO5gmRLyCn6dhhbG/g/D4qJx6BargfFDqtKZ5pSKZYnYRkHjmtdD62F/HnqZd/UGJ1nDlAI2c3+oNmGkiwk5GtXFqpnNCh8J116z9/bj1sxwtjQViEoIkKLtlhsyT3eMu+iZufcKlvuZW/H+MzobzDxDis='
+encrypt:
+  keyStore:
+    location: classpath:server.jks
+    password: ${KEYSTORE_PASSWORD:59store}
+---
+spring:
+  profiles: qa
+  cloud:
+    config:
+      server:
+        git:
+          uri: http://code.59store.com/config/config-qa.git
+          username: chenyb
+          password: '{cipher}AQBhY2z8mTYdy8UCQliYc39mI76q/aJ0dwDcBUzGE3EtjTW8InPq50yHE0BKoVC9NzbEssAxl+joMxCKZcjPizKwtz3f+kYQZuRSpyiPsAp7SSCtTBHlkK5oNjIBGQ6hAhaf6jAhpeQEk3Zz9YhMyxkhYF+ES2FRkYI+pQm/JH+P4XvO2FMFk1gz5CxrH+xRali7VHRxp8mG15T6Y+hAuekmjGEPXV+GJenfWdzBkJO5gmRLyCn6dhhbG/g/D4qJx6BargfFDqtKZ5pSKZYnYRkHjmtdD62F/HnqZd/UGJ1nDlAI2c3+oNmGkiwk5GtXFqpnNCh8J116z9/bj1sxwtjQViEoIkKLtlhsyT3eMu+iZufcKlvuZW/H+MzobzDxDis='
+encrypt:
+  keyStore:
+    location: classpath:server.jks
+    password: ${KEYSTORE_PASSWORD:59store}
+---
+spring:
+  profiles: stage
+  cloud:
+    config:
+      server:
+        git:
+          uri: http://code.59store.com/config/config-stage.git
+          username: chenyb
+          password: '{cipher}AQBhY2z8mTYdy8UCQliYc39mI76q/aJ0dwDcBUzGE3EtjTW8InPq50yHE0BKoVC9NzbEssAxl+joMxCKZcjPizKwtz3f+kYQZuRSpyiPsAp7SSCtTBHlkK5oNjIBGQ6hAhaf6jAhpeQEk3Zz9YhMyxkhYF+ES2FRkYI+pQm/JH+P4XvO2FMFk1gz5CxrH+xRali7VHRxp8mG15T6Y+hAuekmjGEPXV+GJenfWdzBkJO5gmRLyCn6dhhbG/g/D4qJx6BargfFDqtKZ5pSKZYnYRkHjmtdD62F/HnqZd/UGJ1nDlAI2c3+oNmGkiwk5GtXFqpnNCh8J116z9/bj1sxwtjQViEoIkKLtlhsyT3eMu+iZufcKlvuZW/H+MzobzDxDis='
+encrypt:
+  keyStore:
+    location: classpath:server.jks
+    password: ${KEYSTORE_PASSWORD:59store}
+---
+spring:
+  profiles: prod
+  cloud:
+    config:
+      server:
+        git:
+          uri: http://code.59store.com/devops/config-product.git
+          username: yunwei@59store.com
+          password: '{cipher}AQCfD4B0jzsS3QLkLsiLWqv2bge66oltYrl92TBMj93M7zFXIhHq5/KKCokivBVeqvwAlzA2/1buqYsw1fJRavbqMQe1gbl920uc3/WH3n7e30vZmYsi52oIE+UP0HxZo4I9/vDo2oJL79IXkb0Xx3qctnskNsKMZKbbMj9bT60GyiUp2HuBU87whC0zXKtGcQFmLhPbaOcA8X1CJ206rJbHOAphe+lzMYnppqsm0wKMU47OW2dWVhmmYvN3hY7wI5zDyJf5n8MXxqKNml58dYd+Hcr3rIc4RAbFpBVAG1Na7/arxRU9ITJsNOV6nKCUq32FUrtHQu5gZ3mrOtVcRLORlF8kJmcrBCpc4aAExJLnXmThBjDlSWAPJjzqcFOKI5OzDVewL2gAcvz/aXpGvPQt1WaGNZYuoIL7vtD5DfUVAA=='
+encrypt:
+  keyStore:
+    location: classpath:server-prod.jks
+    password: ${KEYSTORE_PASSWORD:59store}
+    
+---
+spring:
+  profiles: staging
+  cloud:
+    config:
+      server:
+        git:
+          uri: http://code.59store.com/devops/config-staging.git
+          username: yunwei@59store.com
+          password: '{cipher}AQCfD4B0jzsS3QLkLsiLWqv2bge66oltYrl92TBMj93M7zFXIhHq5/KKCokivBVeqvwAlzA2/1buqYsw1fJRavbqMQe1gbl920uc3/WH3n7e30vZmYsi52oIE+UP0HxZo4I9/vDo2oJL79IXkb0Xx3qctnskNsKMZKbbMj9bT60GyiUp2HuBU87whC0zXKtGcQFmLhPbaOcA8X1CJ206rJbHOAphe+lzMYnppqsm0wKMU47OW2dWVhmmYvN3hY7wI5zDyJf5n8MXxqKNml58dYd+Hcr3rIc4RAbFpBVAG1Na7/arxRU9ITJsNOV6nKCUq32FUrtHQu5gZ3mrOtVcRLORlF8kJmcrBCpc4aAExJLnXmThBjDlSWAPJjzqcFOKI5OzDVewL2gAcvz/aXpGvPQt1WaGNZYuoIL7vtD5DfUVAA=='
+encrypt:
+  keyStore:
+    location: classpath:server-prod.jks
+    password: ${KEYSTORE_PASSWORD:59store}

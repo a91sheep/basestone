@@ -1,0 +1,47 @@
+Configuration:
+  Properties:
+    property:
+      - name: app_name
+        value: configserver
+      - name: log_level
+        value: info
+  Appenders:
+    RollingRandomAccessFile:
+      - name: infoRollingFile
+        ThresholdFilter:
+          level: error
+          onMatch: DENY
+          onMismatch: ACCEPT
+        fileName: /var/log/tomcat/${app_name}/info.log
+        filePattern: /var/log/tomcat/${app_name}/info.%d{yyyy-MM-dd}.log
+        PatternLayout:
+          Pattern: '[%d]\t%p\t[${app_name}]\t%c{1}\t%M\t[%t]\t[%X{reqId}]\t--\t%m%n'
+        Policies:
+          TimeBasedTriggeringPolicy:
+            interval: 1
+            modulate: true
+      - name: errorRollingFile
+        ThresholdFilter:
+          level: error
+          onMatch: ACCEPT
+          onMismatch: DENY
+        fileName: /var/log/tomcat/${app_name}/err.log
+        filePattern: /var/log/tomcat/${app_name}/err.%d{yyyy-MM-dd}.log
+        PatternLayout:
+          Pattern: '[%d]\t%p\t[${app_name}]\t%c{1}\t%M\t[%t]\t[%X{reqId}]\t--\t%m%n'
+        Policies:
+          TimeBasedTriggeringPolicy:
+            interval: 1
+            modulate: true
+    Console:
+          name: console
+          PatternLayout:
+            Pattern: '[%d]\t%p\t[${app_name}]\t%c{1}\t%M\t[%t]\t[%X{reqId}]\t--\t%m%n'
+          target: SYSTEM_OUT
+  Loggers:
+    Root:
+      level: ${log_level}
+      AppenderRef:
+        - ref: console
+        - ref: infoRollingFile
+        - ref: errorRollingFile

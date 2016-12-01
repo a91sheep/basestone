@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: springcloud-service
+kylin:
+  cloud:
+    app:
+      version: 1.0
+      description: service测试demo
+    contextPath: /springcloudservice

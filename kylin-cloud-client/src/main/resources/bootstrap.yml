@@ -1,0 +1,55 @@
+spring:
+  jmx:
+    enabled: false
+#    default-domain:
+#      ${management.context-path}
+  profiles:
+    active: default
+  cloud:
+    config:
+      name: global,kylin,${kylin.cloud.config.names:${kylin.cloud.config.name:${spring.application.name}}}
+      enabled: true
+      failFast: true
+#      discovery:
+#        enabled: false
+#        serviceId: CONFIGSERVER
+encrypt:
+  failOnError: false
+---
+spring:
+  profiles: default
+  cloud:
+    config:
+      uri: http://${kylin.cloud.config.host:ConfigServer}:8888/configserver
+---
+spring:
+  profiles: dev
+  cloud:
+    config:
+      uri: http://config.59temai.com/configserver
+---
+spring:
+  profiles: qa
+  cloud:
+    config:
+      uri: http://config.59shangcheng.com:8888/configserver
+---
+spring:
+  profiles: local_qa
+  cloud:
+    config:
+      uri: http://config.59shangcheng.com:8888/configserver
+kylin.cloud.discovery.register: false
+---
+spring:
+  profiles: local
+  cloud:
+    config:
+      uri: http://config.59temai.com/configserver
+kylin.cloud.discovery.register: false
+---
+spring:
+  profiles: prod
+  cloud:
+    config:
+      uri: http://${kylin.cloud.config.host:ConfigServer}:8888/configserver
